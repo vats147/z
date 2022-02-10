@@ -12,6 +12,7 @@ class customer {
     String[] Account_type = new String[100];
     double[] Account_balance = new double[100];
     String[][] Account_transaction = new String[100][10];
+    int[] a=new int[100];
 
 
     // check,flag,temp and temp_flag variable
@@ -27,7 +28,10 @@ class customer {
 
     // counstructor
     customer() {
-
+        for(int i=0;i<100;i++)
+        {
+            a[i]=0;
+        }
     }
 
     public void increase() {
@@ -45,7 +49,9 @@ class customer {
 
     }
 
-       // verifying mail avaiable or not
+       // verifying name avaiable or not
+       //due to name not avaible we right now ignore this
+    /*
        public boolean Check_name(String c_mail) {
        
         System.out.println(c_mail);
@@ -54,7 +60,7 @@ class customer {
             System.out.println("world" + Check);
             System.out.println(Customer_Name[i]);
             System.out.println(" c "+c_mail);
-            System.out.println(c_mail||Customer_Name[i]);
+            //System.out.println(c_mail||Customer_Name[i]);
             if ( c_mail == Customer_Name[i] )
             {
             System.out.println("hello");
@@ -66,7 +72,7 @@ class customer {
         return false;
 
        
-    }
+    }*/
 
     public static void Divider() {
         System.out.println("**********************");
@@ -89,6 +95,22 @@ class customer {
     // Deposite money in account
     public void Add_Amount(double Temp_amount) {
         Account_balance[flag] += Temp_amount;
+        System.out.println("a[flag] :::before"+a[flag]);
+
+        Count=a[flag];
+
+        if(Count<10)
+        {
+
+            Count++;
+        }
+        else
+        {
+            Count=0;
+        }
+       
+        a[flag]=Count;
+       
 
     }
 
@@ -149,6 +171,18 @@ class customer {
         } else if (c_amount <= Account_balance[flag]) {
 
             Account_balance[flag] -= c_amount;
+            Count=a[flag];
+        Account_transaction[flag][Count]="Withdraw:"+Account_balance[flag];
+         if(Count<10)
+        {
+
+            Count++;
+        }
+        else
+        {
+            Count=0;
+        }
+        a[flag]=Count;
 
             return true;
         }
@@ -212,13 +246,50 @@ class customer {
 
             Account_balance[temp] -= C_amount;
             Account_balance[temp_flag] += C_amount;
+
+              Count=a[temp];
+             Account_transaction[temp][Count]="Withdraw:"+Account_balance[temp];
+             if(Count<10)
+        {
+
+            Count++;
+        }
+        else
+        {
+            Count=0;
+        }
+            a[temp]=Count;
+
+            Count=a[temp_flag];
+            Account_transaction[temp_flag][Count]="Deposite via transfer " +Account_balance[temp_flag];
+             if(Count<10)
+        {
+
+            Count++;
+        }
+        else
+        {
+            Count=0;
+        }
+
+            a[temp_flag]=Count;
         }
     }
 
     public void display_transaction(long ac_no) {
 
-        for (int i = 0; i < Check; i++) {
-            for (int j = 0; j < Count; j++) {
+        for (int i=0;i<Check ;i++ ) {
+            System.out.println("hello world");
+            if(Account_no[i]==ac_no){
+            System.out.println("flag setted");
+
+                flag=i;}
+        }
+        for (int i = 0; i < flag; i++) {
+            System.out.println("i="+i);
+            System.out.println("aa="+a[flag]);
+
+            for (int j = 0; j < a[flag]; j++) {
                 System.out.println(Account_transaction[i][j]);
             }
         }
@@ -431,19 +502,21 @@ class Menudriven {
                                 break;
 
                             // forgot password
+                            //here 
                             case 2:
                                 System.out.println("please enter your account number ");
                                 Temp_Customer_AC_no = sc.nextLong();
+
                                 if (cu.Check_account_avaliable(Temp_Customer_AC_no) == true) {
-                                    System.out.println("please enter your name for verifying your identity");
-                                    Temp_Customer_Name = sc.next();
-                                    System.out.println(Temp_Customer_Name);
-                                    if (cu.Check_name(Temp_Customer_Name) == true) {
+                                    
+                                  
+                                   
                                         cu.Change_pin(Temp_Pin);
-                                    } else {
-                                        System.out.println("Your account can't verify");
                                     }
-                                } else {
+                                
+                                    
+                                
+                                 else {
                                     System.out.println("account not found");
                                 }
                                 break;
@@ -517,6 +590,7 @@ class Menudriven {
                         System.out.println("Account is already avaiable please try with another phone number");
                     } else {
                         cu.input(Temp_Customer_Name, Temp_Customer_AC_no, Temp_Pin, Temp_Mail, Temp_type);
+                        System.out.println("Account created succesfully");
                     }
 
                     Divider();

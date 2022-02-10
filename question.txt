@@ -1,0 +1,11 @@
+//create array store and display
+//find min max from array
+//reverse array
+sort array
+find occurance of integer of array 
+//find sum of two array
+find the union and intersaction of the two soted array
+//display cyclikiy rotate an array
+find the missing element from the array
+find the array subset of other array or not 
+
